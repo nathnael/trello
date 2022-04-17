@@ -4,8 +4,25 @@ import { Card } from "./Card";
 import { AppContainer } from "./styles";
 import { AddNewItem } from "./AddNewItem";
 import { useAppState } from "./AppStateContext";
+import { DragItem } from './DragItem';
 
-function App() {
+
+interface Task {
+  id: string
+  text: string
+}
+
+interface List {
+  id: string
+  text: string
+  tasks: Task[]
+}
+export interface AppState {
+  lists: List[],
+  draggedItem: DragItem | undefined;
+}
+
+const App = () => {
   const {state, dispatch} = useAppState();
 
   return (
