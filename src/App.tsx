@@ -1,11 +1,10 @@
-import React from 'react';
-import { Column } from "./Column";
-import { Card } from "./Card";
-import { AppContainer } from "./styles";
-import { AddNewItem } from "./AddNewItem";
-import { useAppState } from "./AppStateContext";
-import { DragItem } from './DragItem';
-
+import React from "react"
+import { Column } from "./Column"
+import { AppContainer } from "./styles"
+import { useAppState } from "./AppStateContext"
+import { AddNewItem } from "./AddNewItem"
+import { DragItem } from "./DragItem"
+import CustomDragLayer from "./CustomDragLayer"
 
 interface Task {
   id: string
@@ -17,25 +16,27 @@ interface List {
   text: string
   tasks: Task[]
 }
+
 export interface AppState {
-  lists: List[],
-  draggedItem: DragItem | undefined;
+  draggedItem: DragItem | undefined
+  lists: List[]
 }
 
 const App = () => {
-  const {state, dispatch} = useAppState();
+  const {state, dispatch} = useAppState()
 
   return (
     <AppContainer>
+      <CustomDragLayer />
       {state.lists.map((list, i) => (
         <Column id={list.id} text={list.text} key={list.id} index={i}/>
       ))}
-      <AddNewItem 
-        toggleButtonText="+ Add another list" 
-        onAdd={text => dispatch({ type: "ADD_LIST", payload: text })} 
+      <AddNewItem
+        toggleButtonText="+ Add another list"
+        onAdd={text => dispatch({ type: "ADD_LIST", payload: text })}
       />
     </AppContainer>
-  );
+  )
 }
 
-export default App;
+export default App
