@@ -1,10 +1,26 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, { createContext, useReducer, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { ColumnDragItem, DragItem } from "./DragItem";
 import { moveItem } from "./utils/moveItem";
 
 import { findItemIndexById } from "./utils/findItemIndexById";
-import { AppState } from "./App";
+import { save } from "./api";
+
+interface Task {
+    id: string
+    text: string
+}
+  
+interface List {
+    id: string
+    text: string
+    tasks: Task[]
+}
+  
+export interface AppState {
+    draggedItem: DragItem | undefined
+    lists: List[]
+}
 
 type Action =
     | {
@@ -66,6 +82,10 @@ const AppStateContext = createContext<AppStateContextProps>({} as AppStateContex
 
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
     const [state, dispatch] = useReducer(appStateReducer, appData);
+
+    useEffect(() => {
+        save(state)
+    }, [state])
 
     return (
         <AppStateContext.Provider value={{ state, dispatch }}>

@@ -6,22 +6,6 @@ import { AddNewItem } from "./AddNewItem"
 import { DragItem } from "./DragItem"
 import CustomDragLayer from "./CustomDragLayer"
 
-interface Task {
-  id: string
-  text: string
-}
-
-interface List {
-  id: string
-  text: string
-  tasks: Task[]
-}
-
-export interface AppState {
-  draggedItem: DragItem | undefined
-  lists: List[]
-}
-
 const App = () => {
   const {state, dispatch} = useAppState()
 
